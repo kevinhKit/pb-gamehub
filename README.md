@@ -1,39 +1,46 @@
 
+# Configuración del repositorio
+Para descargar e utilizar el repositorio siga los siguiente pasos
 
+# 1. clonar repositorio
+``` git clone https://github.com/kevinhKit/pb-gamehub.git ```
 
+# Instalar dependencias
+```  ```
 
-clonar repositorio
+# Crear una base de datos en MySQL
+Nota: Debe tener instalado MySQL
 
+# Configurar base de datos en django
+Nota: Entrar en el archivo ``` settings.py  ``` del proyecto y configurar los meta datos de conexión
 
-instalar dependencias
-
-
-instalar mysql
-
-
-crear base de datos de mysql 
-
-
-configurar base de datos
-
-DATABASES = {
+``` 
+    DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'gamehub',  # Nombre de la base de datos creada
-        'USER': 'admindj',  # Usuario con privilegios sobre la base de datos
-        'PASSWORD': 'asd.123',  # Contraseña del usuario
-        'HOST': 'localhost',   # Host donde se aloja la base de datos, localhost indica que está en el mismo servidor
-        'PORT': '3306',        # Puerto por defecto para MySQL
+        'NAME': '<database>',
+        'USER': '<username>',
+        'PASSWORD': '<password>',
+        'HOST': '<host>',
+        'PORT': '<port>',
     }
 }
+```
 
 
-realizar las migraciones de django con mysql
+# Levantar el proyecto y realizar las migraciones
+1. Levantar el entorno virtual
+    ``` source gamehub/Scripts/activate  ```
+2. Entrar dentro del directorio que tenga el archivo ```manage.py```
+    ``` cd <path>  ```
+3. Realizar las migraciones de la base de datos
+    ``` python manage.py migrate ```
+4. Levantar el proyecto
+    ``` python manage.py runserver ```
 
-instalar redis
 
 
-configurar redis
 
-
-realizar las migraciones de django con redis
+<!-- instalar redis -->
+<!-- configurar redis -->
+<!-- realizar las migraciones de django con redis -->
