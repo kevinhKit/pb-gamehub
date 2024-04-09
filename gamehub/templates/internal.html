@@ -1,0 +1,56 @@
+{% extends "index.html" %}
+{% load static %}
+
+
+{% block title %} GameHub | Bienvenido {% endblock %}
+
+
+{% block css %}
+    <link type="text/css" rel="stylesheet" href='{% static "css/internal.css" %}'>
+{% endblock %}
+
+{% block header %}
+    {% include '_header.html' %}
+    <!-- {{ block.super }} -->
+{% endblock %}
+
+
+
+{% block aside %}
+    {% include '_sidebar.html' %}
+{% endblock %}
+
+
+{% block main %}
+    <div class="game-container">
+        <div>
+            <h1>Damas Chinas</h1>
+        </div>
+        <div>
+            <h1>Tic Tac Toe</h1>
+        </div>
+        <div>
+            <h1>Sopa de Letras</h1>
+        </div>
+    </div>
+{% endblock %}
+
+
+
+{% block js  %}
+
+<script>
+    // let url = `ws://${window.location.host}/ws/socket-server/`
+    
+    // const chatSocket = new WebSocket(url)
+
+    // chatSocket.onmessage = function(e){
+    //     let data = JSON.parse(e.data)
+    //     console.log('Data:', data)
+    // }
+
+</script>
+  
+
+
+{% endblock  %}
