@@ -1,9 +1,5 @@
-/lib
-
-/Scripts
+/venv
 
 
-/Include
-
-
-*.cfg
+# SQLite database
+gamehub/db.sqlite3
