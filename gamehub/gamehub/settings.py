@@ -74,24 +74,14 @@ TEMPLATES = [
 WSGI_APPLICATION = 'gamehub.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'gamehub',  # Nombre de la base de datos creada
-        'USER': 'admindj',  # Usuario con privilegios sobre la base de datos
-        'PASSWORD': 'asd.123',  # Contraseña del usuario
-        'HOST': 'localhost',   # Host donde se aloja la base de datos, localhost indica que está en el mismo servidor
-        'PORT': '3306',        # Puerto por defecto para MySQL
+        'NAME': 'gamehub',
+        'USER': 'admindj',
+        'PASSWORD': 'asd.123',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 
@@ -136,13 +126,6 @@ STATIC_URL = 'static/'
 
 # STATICFILES_DIRS = (os.path.join(BASE_DIR,'gamehub/static'),)
 STATICFILES_DIRS = ('gamehub/static',)
-# STATICFILES_DIRS = [
-#     BASE_DIR / 'gamehub' / 'static',
-# ]
-# STATICFILES_DIRS = [
-#     'gamehub/static',
-# ]
-
 
 
 # Default primary key field type
@@ -151,51 +134,6 @@ STATICFILES_DIRS = ('gamehub/static',)
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-
-
-
-
-
-
-
-
-# redis
-# CACHES = {
-#     "default": {
-#         "BACKEND": "django_redis.cache.RedisCache",
-#         "LOCATION": "redis://:<password>@<host>:<port>/<database>",
-#         "OPTIONS": {
-#             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-#         }
-#     }
-# }
-
-# CACHES = {
-#     "default": {
-#         "BACKEND": "django_redis.cache.RedisCache",
-#         "LOCATION": "redis://localhost:6379/1",
-#         "OPTIONS": {
-#             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-#         },
-#         "KEY_PREFIX": "example"
-#     }
-# }
-
-
 # mysite/settings.py
 # Daphne
 ASGI_APPLICATION = 'gamehub.asgi.application'
-
-
-# Habilitar capas canal con redis
-# mysite/settings.py
-# Channels
-# ASGI_APPLICATION = "mysite.asgi.application"
-# CHANNEL_LAYERS = {
-#     "default": {
-#         "BACKEND": "channels_redis.core.RedisChannelLayer",
-#         "CONFIG": {
-#             "hosts": [("127.0.0.1", 6379)],
-#         },
-#     },
-# }
