@@ -2,4 +2,9 @@
 
 
 # SQLite database
-gamehub/db.sqlite3
+/gamehub/db.sqlite3
+
+
+
+
+/gamehub/gamehub/__pycache__/
