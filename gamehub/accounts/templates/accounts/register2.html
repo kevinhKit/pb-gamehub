@@ -1,0 +1,45 @@
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regístrese</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+<main class="w-full min-h-screen flex flex-col">
+    <header>
+        <Header />
+    </header>
+
+    <MainLayout>
+        <section class="grid grid-rows-2 justify-items-center max-h-screen w-screen">
+            <div class="flex flex-col gap-5 p-5 justify-center items-center bg-purple-800 w-3/6 rounded-lg mt-10 h-96">
+                <h1 class="font-bold text-white text-4xl">Registro</h1>
+                <form class="grid grid-cols-2 justify-items-center gap-5">
+                    <input type="text" placeholder="Nombre" class="h-10 rounded-md w-full p-2 outline-none" />
+                    <input type="text" placeholder="Apellido" class="h-10 rounded-md w-full p-2 outline-none" />
+
+                    <input type="text" placeholder="Correo electrónico" class="h-10 rounded-md w-full p-2 outline-none" />
+                    <input type="text" placeholder="Nombre de usuario" class="h-10 rounded-md w-full p-2 outline-none" />
+
+                    <input type="password" placeholder="Contraseña" class="h-10 rounded-md w-full p-2 outline-none" />
+                    <input type="password" placeholder="Confirmar contraseña" class="h-10 rounded-md w-full p-2 outline-none" />
+
+                    <input type="url" placeholder="Link de foto de perfil" class="h-10 rounded-md w-full p-2 outline-none col-span-2" />
+
+                    <button class="bg-white p-2 w-3/6 rounded-full col-span-2 font-bold text-purple-800">Registrarse</button>
+                </form>
+            </div>
+
+            <svg class="self-end" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#5000ca" fill-opacity="1" d="M0,160L60,160C120,160,240,160,360,181.3C480,203,600,245,720,250.7C840,256,960,224,1080,197.3C1200,171,1320,149,1380,138.7L1440,128L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path></svg>
+        </section>
+    </MainLayout>
+</main>
+
+</body>
+</html>

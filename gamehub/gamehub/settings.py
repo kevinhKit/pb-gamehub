@@ -32,8 +32,9 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'landing_page',
-    'chat',
     'daphne',
+    'accounts',
+    # 'chat',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -137,3 +138,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # mysite/settings.py
 # Daphne
 ASGI_APPLICATION = 'gamehub.asgi.application'
+
+
+
+# models customUser
+AUTH_USER_MODEL = 'accounts.CustomUser'
