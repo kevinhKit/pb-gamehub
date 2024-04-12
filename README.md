@@ -78,16 +78,33 @@ Nota: Entrar en el archivo ``` settings.py  ``` del proyecto y configurar los me
 ```
 
 
-## Ejecutar Migraciones y Servidor
+## Realizar las migraciones
+Para realizar las migraciones, ejecuta:
 ```
     python manage.py migrate
+```
+
+## Cargar datos por defecto
+Es fundamental cargar ciertos datos iniciales para que la aplicación funcione correctamente. Ejecuta los siguientes comandos para cargar los roles básicos en la base de datos:
+```
+    python manage.py loaddata initial_roles.json
+```
+
+## Ejecutar el servidor
+Para levantar el servidor ejecuta, ejecuta:
+```
     python manage.py runserver
 ```
 
 Visita http://127.0.0.1:8000 en tu navegador para acceder a la aplicación.
 
 ## Contribución
-Si estás interesado en contribuir al proyecto, considera hacer fork del repositorio y envía tus pull requests para revisión.
+Agradecemos cualquier contribución a GameHub. Si deseas contribuir, por favor:
+1. Haz un fork del repositorio.
+2. Crea una rama para tu característica (`git checkout -b feature/<nuevaCaracteristica>`).
+3. Realiza tus cambios y añade tests si es aplicable.
+4. Envía un pull request con una descripción clara de los cambios y cualquier otra información relevante.
+
 
 ## Licencia
 Este proyecto se distribuye bajo la Licencia MIT.
