@@ -16,10 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include  
-# from django.urls import path
 
 urlpatterns = [
-    # path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     path('', include('landing_page.urls')),
     # path("chat/", include("chat.urls")),
     path("accounts/", include(('accounts.urls', 'accounts'), namespace='accounts')),
