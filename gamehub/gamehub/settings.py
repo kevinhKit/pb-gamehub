@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'accounts',
     'chinese_checkers',
     'word_search',
+    'tic_tac_toe',
     # 'chat',
     'django.contrib.admin',
     'django.contrib.auth',

@@ -25,4 +25,5 @@ urlpatterns = [
     path("accounts/", include(('accounts.urls', 'accounts'), namespace='accounts')),
     path("checkers/", include(('chinese_checkers.urls', 'checkers'), namespace='checkers')),
     path("words/", include(('word_search.urls', 'words'), namespace='words')),
+    path("tictactoe/", include(('tic_tac_toe.urls', 'tictactoe'), namespace='tictactoe')),
 ]
