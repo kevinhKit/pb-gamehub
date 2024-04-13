@@ -1,3 +1,25 @@
 from django.db import models
+from django.utils import timezone
 
-# Create your models here.
+class Category(models.Model):
+    name = models.CharField(max_length=100)
+    creation_date = models.DateTimeField(default=timezone.now)
+    update_date = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+class Word(models.Model):
+    word = models.CharField(max_length=100)
+    length = models.IntegerField(editable=False)
+    category = models.ForeignKey(Category, related_name='words', on_delete=models.CASCADE)
+    difficulty = models.CharField(max_length=10, choices=[('easy', 'Easy'), ('medium', 'Medium'), ('hard', 'Hard')])
+    creation_date = models.DateTimeField(default=timezone.now)
+    update_date = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.word
+
+    def save(self, *args, **kwargs):
+        self.length = len(self.word)
+        super().save(*args, **kwargs)
