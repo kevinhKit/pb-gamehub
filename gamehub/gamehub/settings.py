@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'landing_page',
     'daphne',
+    'match_core',
     'accounts',
     'chinese_checkers',
     'word_search',
