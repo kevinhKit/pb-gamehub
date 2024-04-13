@@ -32,6 +32,12 @@ section{
     background-color: rgb(107 33 168 / var(--tw-bg-opacity));
 }
 
+.form-container.login-form{
+    width: 26rem;
+    min-width: min(95%, 26rem);
+    padding-block: 2.6rem;
+}
+
 
 
 h2{
@@ -49,9 +55,14 @@ form{
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1.25rem;
 }
+form.login-form{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 90%;
+}
 
 input{
     padding: 0.5rem;
+    padding-left: 1rem;
     border-radius: 0.375rem;
     border-width: 0;
     height: 2.5rem;
@@ -59,6 +70,9 @@ input{
     /* line-height: 1rem; */
 }
 input[type=url] {
+    grid-column: span 2 / span 2;
+}
+.login-form input[type=text], .login-form input[type=password] {
     grid-column: span 2 / span 2;
 }
 
@@ -79,7 +93,12 @@ button{
 }
 
 
-
+/* .button{
+    min-width: 5rem
+}
+.button.btn-one{
+    min-width: 3rem
+} */
 
 
 
@@ -98,4 +117,25 @@ button{
 svg{
     position: absolute;
     bottom: 0;
+}
+
+.btn-redirect{
+    background-color: white;
+    --tw-bg-opacity: 1;
+    color: rgb(107 33 168 / var(--tw-bg-opacity));
+    padding: 0.5rem;
+    font-weight: 700;
+    border-radius: 100px;
+    font-size: 1rem;
+    text-decoration: none;
+    /* text-align: center; */
+    margin-inline: auto;
+    width: 50%;
+    grid-column: span 2 / span 2;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    
 }

@@ -1,24 +1,27 @@
-# accounts/views.py
+
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from .models import Role
-from .forms import CustomUserCreationForm  # Asegúrate de crear este formulario
+from .forms import CustomUserCreationForm
+from .forms import CustomAuthenticationForm
 
 def register(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)  # No guardes el usuario aún
+            user = form.save(commit=False)
             try:
                 default_role = Role.objects.get(name='Usuario')
                 user.role = default_role
             except Role.DoesNotExist:
-                # Esto capturará el error si el rol no existe y no interrumpirá tu aplicación
+                
                 messages.error(request, 'El rol necesario no existe.')
                 return render(request, 'accounts/register.html', {'form': form})
-            user.save()  # Guarda el usuario después de asignar el role
+            user.save() 
             messages.success(request, 'Registro exitoso. Ahora puedes iniciar sesión.')
             return redirect('home')
         else:
@@ -28,11 +31,18 @@ def register(request):
     return render(request, 'accounts/register.html', {'form': form})
 
 
+# def custom_login(request):
+#     return render(request, "accounts/login.html")
 
-def registrarse(request):
-    return render(request, "accounts/register2.html")
 
 
-# if request.method == 'POST':
-#         # procesa el formulario
-#         return redirect('nombre_de_la_url_a_redirigir')
+
+def custom_login(request):
+    if request.method == 'POST':
+        form = CustomAuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            auth_login(request, form.get_user())
+            return redirect('home')  # Asegúrate de tener una URL con nombre 'home' o cambia esto a donde quieras redirigir después del inicio de sesión
+    else:
+        form = CustomAuthenticationForm()
+    return render(request, "accounts/login.html", {'form': form})

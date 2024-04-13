@@ -8,3 +8,15 @@
 
 
 /gamehub/gamehub/__pycache__/
+
+
+
+/gamehub/**/__pycache__/
+
+
+
+/gamehub/accounts/__pycache__/
+
+
+
+__pycache__
