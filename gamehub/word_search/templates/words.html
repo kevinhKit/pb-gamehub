@@ -1,0 +1,34 @@
+{% extends "internal.html" %}
+{% load static %}
+
+
+{% block title %} Sopa de Letras | GameHub {% endblock %}
+
+
+{% block css %}
+    {{ block.super }}
+    <link type="text/css" rel="stylesheet" href="{% static 'word_search/css/styles.css' %}">
+{% endblock %}
+
+{% block header %}
+    {% include '_header.html' %}
+    <!-- {{ block.super }} -->
+{% endblock %}
+
+
+
+{% block aside %}
+    {% include '_sidebar.html' %}
+{% endblock %}
+
+
+{% block main %}
+    <h1>Sopa de Letras</h1>
+{% endblock %}
+
+
+
+{% block js  %}
+
+
+{% endblock  %}

@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'daphne',
     'accounts',
     'chinese_checkers',
+    'word_search',
     # 'chat',
     'django.contrib.admin',
     'django.contrib.auth',
