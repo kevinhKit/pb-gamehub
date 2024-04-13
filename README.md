@@ -41,21 +41,21 @@ Entrar en la carpeta del proyecto ``` pb-gamehub ```, si no tiene creado el ento
 Para usuarios de Unix o MacOS:
 
 ```
-    python3 -m venv venv
-    source venv/bin/activate
+python3 -m venv venv
+source venv/bin/activate
 ```
 Para usuarios de Windows:
 
 ```
-    python -m venv venv
-    .\venv\Scripts\activate
+python -m venv venv
+.\venv\Scripts\activate
 ```
 
 
 
 ## Instalar dependencias
 ```
-    pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 
 ## Crear una base de datos en MySQL
@@ -65,7 +65,7 @@ Asegúrate de tener MySQL instalado y luego crea una nueva base de datos.
 Nota: Entrar en el archivo ``` settings.py  ``` del proyecto y configurar los meta datos de conexión
 
 ``` 
-    DATABASES = {
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': '<database>',
@@ -81,19 +81,33 @@ Nota: Entrar en el archivo ``` settings.py  ``` del proyecto y configurar los me
 ## Realizar las migraciones
 Para realizar las migraciones, ejecuta:
 ```
-    python manage.py migrate
+python manage.py migrate
 ```
 
 ## Cargar datos por defecto
 Es fundamental cargar ciertos datos iniciales para que la aplicación funcione correctamente. Ejecuta los siguientes comandos para cargar los roles básicos en la base de datos:
+### Roles de Usuarios por defecto
 ```
-    python manage.py loaddata initial_roles.json
+python manage.py loaddata initial_roles.json
 ```
+### Categorias y Palabras `no` por defecto
+```
+python manage.py loaddata initial_data.json
+```
+
+## Crear un Superusuario
+Para acceder al sitio de administración, necesitarás un superusuario. Crea uno con el siguiente comando:
+```
+python manage.py createsuperuser
+```
+Sigue las instrucciones en pantalla para completar la creación del superusuario. Se te pedirá un nombre de usuario, correo electrónico y contraseña.
+
+
 
 ## Ejecutar el servidor
 Para levantar el servidor ejecuta, ejecuta:
 ```
-    python manage.py runserver
+python manage.py runserver
 ```
 
 Visita http://127.0.0.1:8000 en tu navegador para acceder a la aplicación.
