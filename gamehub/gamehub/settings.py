@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'landing_page',
     'daphne',
     'accounts',
+    'chinese_checkers',
     # 'chat',
     'django.contrib.admin',
     'django.contrib.auth',

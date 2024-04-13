@@ -31,18 +31,12 @@ def register(request):
     return render(request, 'accounts/register.html', {'form': form})
 
 
-# def custom_login(request):
-#     return render(request, "accounts/login.html")
-
-
-
-
 def custom_login(request):
     if request.method == 'POST':
         form = CustomAuthenticationForm(request, data=request.POST)
         if form.is_valid():
             auth_login(request, form.get_user())
-            return redirect('home')  # Asegúrate de tener una URL con nombre 'home' o cambia esto a donde quieras redirigir después del inicio de sesión
+            return redirect('home')
     else:
         form = CustomAuthenticationForm()
     return render(request, "accounts/login.html", {'form': form})

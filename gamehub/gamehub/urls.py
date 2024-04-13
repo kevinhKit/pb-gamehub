@@ -23,5 +23,5 @@ urlpatterns = [
     path('', include('landing_page.urls')),
     # path("chat/", include("chat.urls")),
     path("accounts/", include(('accounts.urls', 'accounts'), namespace='accounts')),
-
+    path("checkers/", include(('chinese_checkers.urls', 'checkers'), namespace='checkers')),
 ]
