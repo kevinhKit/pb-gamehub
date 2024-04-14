@@ -2,11 +2,16 @@
 {% load static %}
 
 
+{% block head %}{% endblock %}
+
 {% block title %} GameHub | Bienvenido {% endblock %}
 
 
 {% block css %}
     <link type="text/css" rel="stylesheet" href='{% static "css/home.css" %}'>
+    {% block local_css %}
+        
+    {% endblock %}
 {% endblock %}
 
 {% block header %}
@@ -22,7 +27,7 @@
 
 
 {% block main %}
-    <div class="game-container">
+    <!-- <div class="game-container">
         <div>
             <h1>Damas Chinas</h1>
         </div>
@@ -32,25 +37,11 @@
         <div>
             <h1>Sopa de Letras</h1>
         </div>
-    </div>
+    </div> -->
 {% endblock %}
 
 
 
 {% block js  %}
-
-<script>
-    // let url = `ws://${window.location.host}/ws/socket-server/`
-    
-    // const chatSocket = new WebSocket(url)
-
-    // chatSocket.onmessage = function(e){
-    //     let data = JSON.parse(e.data)
-    //     console.log('Data:', data)
-    // }
-
-</script>
-  
-
 
 {% endblock  %}

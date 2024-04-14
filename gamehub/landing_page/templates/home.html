@@ -1,0 +1,75 @@
+{% extends "internal.html" %}
+{% load static %}
+
+
+{% block title %} GameHub | Bienvenido {% endblock %}
+{% block head %} 
+    <meta name="csrf-token" content="{{ csrf_token }}">
+{% endblock %}
+
+{% block local_css %}
+    <link type="text/css" rel="stylesheet" href="{% static 'landing_page/css/styles.css' %}">
+{% endblock %}
+
+{% block header %}
+    {% include '_header.html' %}
+    <!-- {{ block.super }} -->
+{% endblock %}
+
+
+
+{% block aside %}
+    {% include '_sidebar.html' %}
+{% endblock %}
+
+
+{% block main %}
+    <div class="game-container">
+        <div data-toggle="modal" data-target="modal-game" data-option="chinese">
+            <h1>Damas Chinas</h1>
+        </div>
+        <div data-toggle="modal" data-target="modal-game" data-option="x0">
+            <h1>Tic Tac Toe</h1>
+        </div>
+        <div data-toggle="modal" data-target="modal-game" data-option="letters">
+            <h1>Sopa de Letras</h1>
+        </div>
+    </div>
+    <!-- <button id="sendActionBtn">Enviar Acción</button> -->
+
+    <div id="modal-game" class="d-none">
+        <div class="container">
+            <div>
+                <h1>Iniciar Partida de Sopa de letras</h1>
+                <span class="close-modal" data-toggle="modal" data-target="modal-game">X</span>
+            </div>
+    
+            <div class="container-options">
+                <div>
+                    <label for="difficulty">Dificultad:</label>
+                    <select id="difficulty">
+                        <!-- Opciones de dificultad se llenarán dinámicamente -->
+                    </select>
+                </div>
+                <div>
+                    <label for="category">Temática:</label>
+                    <select id="category">
+                        <!-- Opciones de categoría se llenarán dinámicamente -->
+                    </select>
+                </div>
+            </div>
+            <div class="btn-container">
+                <!-- <button id="confirmSelection">Confirmar</button> -->
+                <button id="confirmSelection" onclick="confirmSelection()">Confirmar</button>
+
+            <button data-toggle="modal" data-target="modal-game">Cerrar</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+
+{% block js  %}
+    <script src="{% static 'landing_page/js/controller.js' %}"></script>
+{% endblock  %}
