@@ -1,234 +1,173 @@
-
-  /**---------------------------------Inicialización de Variables y Arreglos --------------------------------*/
-
-//trae la variable de contexto de la vista con la lista de palabras
-var palabritas = "{{ palabras }}";
-palabritas = palabritas.replace(/&quot;/g, '"');
-palabritas = JSON.parse(palabritas);
-console.log(palabritas.length);
-
-var palabras = ['CASA', 'COMIDA', 'RAIZ', 'SISTEMAS', 'EXPERTOS', 'SOPA', 'LETRAS']; 
+document.addEventListener('DOMContentLoaded', function() {
+    const wordElements = document.querySelectorAll('li[data-word]');
+    const wordAttributes = Array.from(wordElements).map(el => normalizeWord(el.getAttribute('data-word')));
+    console.log('carga de palabras con atributo')
+    console.log("palabras de atributo 'data-word':", wordAttributes);
 
 
 
-const gridTam = 10; // Tamaño del grid
-const sopa = document.getElementById('sopa');
-const listaPalabras = document.getElementById('listaPalabras');
-let palabSelec = '';
-let grid = []; // Almacenar la cuadrícula de letras
 
 
-
-/**----------------------------------------Llenado de la Sopa de Letras -----------------------------------*/
-// Función para inicializar la cuadrícula de letras
-function inicGrid() {
-    for (let i = 0; i < gridTam; i++) {
-      grid[i] = [];
-      for (let j = 0; j < gridTam; j++) {
-        grid[i][j] = {
-          letra: '', // Inicializar cada celda con una cadena vacía
-          elemento: null
-        };
+    // const words = ['HOUSE', 'FOOD', 'ROOT', 'SYSTEMS', 'EXPERTS', 'SOUP', 'LETTERS', 'GAME', 'PLAY'];
+    const words = [...wordAttributes];
+    console.log('carga de palabras estaticas : ', words)
+    const gridSize = 10;
+    const board = document.getElementById('board');
+    // const wordList = document.getElementById('wordList');
+    const attemptsOutput = document.querySelector('.attempts output');
+    // matriz
+    let grid = []; 
+    let attempts = 0;
+    let foundWords = 0;
+  
+    initGrid();
+    fillGrid();
+    displayWords();
+  
+    function updateAttempts() {
+      attempts++;
+      attemptsOutput.textContent = attempts;
+    }
+  
+    function checkCompletion() {
+      if (foundWords === words.length) {
+        alert("Congratulations! All words found!");
       }
     }
-  }
   
-
-// Función para obtener una letra aleatoria
-function letraRandom() {
-  return String.fromCharCode(65 + Math.floor(Math.random() * 26));
-}
-
-// Función para verificar si una palabra o su reverso está en la lista de palabras
-function palEnLista(pal) {
-   
-    return palabras.includes(pal);
-    
-  }
-  
-  // Función para revertir una cadena de texto
-  function reverseString(str) {
-    return str.split('').reverse().join('');
-  }
-
-
-// Función para generar la sopa de letras
-function generarSopa() {
-    inicGrid();
-  
-    // Insertar palabras en la cuadrícula
-    for (const pal of palabras) {
-      let puesto = false;
-      while (!puesto) {
-        const fila = Math.floor(Math.random() * gridTam);
-        const col = Math.floor(Math.random() * gridTam);
-        const dirIndi = Math.floor(Math.random() * 8);
-        const dir = [
-          [-1, 0], // arriba
-          [-1, 1], // diagonal superior derecha
-          [0, 1],  // derecha
-          [1, 1],  // diagonal inferior derecha
-          [1, 0],  // abajo
-          [1, -1], // diagonal inferior izquierda
-          [0, -1], // izquierda
-          [-1, -1] // diagonal superior izquierda
-        ][dirIndi];
-  
-        if (verLugarPal(pal, fila, col, dir)) {
-          lugarPal(pal, fila, col, dir);
-          puesto = true;
-          break;
+    function initGrid() {
+      for (let i = 0; i < gridSize; i++) {
+        grid[i] = [];
+        for (let j = 0; j < gridSize; j++) {
+          grid[i][j] = { letter: '', element: null, partOfWord: false, x: i, y: j };
         }
       }
     }
   
-    for (let i = 0; i < gridTam; i++) {
-      for (let j = 0; j < gridTam; j++) {
-        if(grid[i][j].letra==''){
-          grid[i][j].letra = letraRandom();
+    function fillGrid() {
+      words.forEach(word => {
+        let placed = false;
+        while (!placed) {
+          const direction = Math.floor(Math.random() * 4);
+          const startRow = Math.floor(Math.random() * gridSize);
+          const startCol = Math.floor(Math.random() * gridSize);
+          placed = tryPlaceWord(word, startRow, startCol, direction);
         }
-        
-      }
-    }
-    // Renderizar la cuadrícula en el DOM
-    for (let i = 0; i < gridTam; i++) {
-      for (let j = 0; j < gridTam; j++) {
-        const cell = document.createElement('div');
-        cell.classList.add('cell');
-        cell.dataset.fila = i;
-        cell.dataset.col = j;
-        cell.dataset.letra = grid[i][j].letra;
-        cell.textContent = grid[i][j].letra;
-        cell.addEventListener('mousedown', handleMouseDown);
-        sopa.appendChild(cell);
-        grid[i][j].elemento = cell;
-      }
-    }
-  }
+      });
   
-  // Función para verificar si una palabra puede ser colocada en una posición específica
-  function verLugarPal(pal, fila, col, dir) {
-    const len = pal.length;
-    const fFila = fila + dir[0] * (len - 1);
-    const fCol = col + dir[1] * (len - 1);
+      for (let i = 0; i < gridSize; i++) {
+        for (let j = 0; j < gridSize; j++) {
+          if (!grid[i][j].partOfWord) {
+            grid[i][j].letter = getRandomLetter();
+          }
+          const cell = document.createElement('div');
+          cell.className = 'cell';
+          cell.textContent = grid[i][j].letter;
+          cell.dataset.x = i;
+          cell.dataset.y = j;
+          board.appendChild(cell);
+          grid[i][j].element = cell;
   
-    if (fFila < 0 || fFila >= gridTam || fCol < 0 || fCol >= gridTam) {
-      return false;
-    }
-  
-    for (let i = 0; i < len; i++) {
-      const f = fila + dir[0] * i;
-      const c = col + dir[1] * i;
-      if (grid[f][c].letra !== '' && grid[f][c].letra !== pal[i]) {
-        return false;
+          cell.addEventListener('mousedown', startSelection);
+          cell.addEventListener('mouseenter', expandSelection);
+          cell.addEventListener('mouseup', endSelection);
+        }
       }
     }
   
-    return true;
-  }
+    function tryPlaceWord(word, row, col, dir) {
+      let coords = [];
+      for (let i = 0; i < word.length; i++) {
+        let newRow = row;
+        let newCol = col;
   
-  // Función para colocar una palabra en una posición específica
-  function lugarPal(pal, fila, col, dir) {
-    const len = pal.length;
-    for (let i = 0; i < len; i++) {
-      const f = fila + dir[0] * i;
-      const c = col + dir[1] * i;
-      grid[f][c].letra = pal[i];
+        if (dir === 0) newCol += i; // horizontal
+        if (dir === 1) newRow += i; // vertical
+        if (dir === 2) { newRow += i; newCol += i; } // diagonal derecho
+        if (dir === 3) { newRow += i; newCol -= i; } // diagonal izquierdo
+  
+        if (newCol < 0 || newCol >= gridSize || newRow < 0 || newRow >= gridSize || grid[newRow][newCol].partOfWord) {
+          return false;
+        }
+        coords.push({ row: newRow, col: newCol });
+      }
+  
+      coords.forEach((coord, index) => {
+        grid[coord.row][coord.col].letter = word[index];
+        grid[coord.row][coord.col].partOfWord = true;
+      });
+  
+      return true;
     }
-  }
   
-  
-
-// Función para generar la lista de palabras
-function generarListaPalabras() {
-    for (const pal of palabras) {
-      const listItem = document.createElement('li');
-      listItem.textContent = pal;
-      listItem.dataset.pal = pal;
-      listaPalabras.appendChild(listItem);
+    function getRandomLetter() {
+      return String.fromCharCode(65 + Math.floor(Math.random() * 26));
     }
-  }
-
-  inicGrid();
-  generarListaPalabras();
-  generarSopa();
-/**------------------------------------Interacción con el Usuario---------------------------------------- */
-
-let seleccionActual = []; // Almacenar la selección actual del usuario
-
-// Manejador de evento para el mouse abajo en el contenedor de la sopa de letras
-sopa.addEventListener('mousedown', handleMouseDown);
-
-// Función para manejar el evento de selección de letras
-function handleMouseDown(event) {
-  sopa.addEventListener('mousemove', handleMouseMove);
-  sopa.addEventListener('mouseup', handleMouseUp);
-}
-
-// Función para manejar el evento de movimiento del mouse
-function handleMouseMove(event) {
-  const target = event.target;
-  if (target.classList.contains('cell')) {
-    const fila = parseInt(target.dataset.fila);
-    const col = parseInt(target.dataset.col);
-    const letra = target.dataset.letra;
-    
-    // Verificar si la celda ya está seleccionada
-    const index = seleccionActual.findIndex(item => item.fila === fila && item.col === col);
-    if (index === -1) {
-      // Si no está seleccionada, la agregamos a la selección actual
-      target.classList.add('selected');
-      agregarLetraSeleccionada({ fila, col, letra });
+  
+    let currentSelection = [];
+    let selecting = false;
+    let lastSelected = null;
+  
+    function areAdjacent(cell1, cell2) {
+      const dx = Math.abs(cell1.dataset.x - cell2.dataset.x);
+      const dy = Math.abs(cell1.dataset.y - cell2.dataset.y);
+      return dx <= 1 && dy <= 1;
     }
-  }
-}
-
-// Función para manejar el evento de mouse arriba
-function handleMouseUp(event) {
-  sopa.removeEventListener('mousemove', handleMouseMove);
-  sopa.removeEventListener('mouseup', handleMouseUp);
   
-  const palabraSeleccionada = seleccionActual.reduce((acc, curr) => acc + curr.letra, ''); // Concatenar letras para formar una palabra
+    function startSelection(event) {
+      if (!selecting) {
+        selecting = true;
+        currentSelection = [event.target];
+        lastSelected = event.target;
+        event.target.classList.add('selected');
+        // updateAttempts();
+      }
+    }
   
-  if (palEnLista(palabraSeleccionada)) { // Verificar si la palabra está en la lista
-    // Resaltar y tachar la palabra en la lista
-    const palabraListElement = document.querySelector(`li[data-pal="${palabraSeleccionada}"]`);
-    palabraListElement.classList.add('strikethrough');
-    seleccionActual.forEach(cell => {
-      const elemento = grid[cell.fila][cell.col].elemento;
-      elemento.classList.add('selected2');
-      //elemento.classList.add('strikethrough');
-    });
-  } else {
-    // Si la palabra no está en la lista, quitar el resaltado de las celdas seleccionadas
-    seleccionActual.forEach(cell => {
-      const elemento = grid[cell.fila][cell.col].elemento;
-      elemento.classList.remove('selected');
-    });
-  }
+    function expandSelection(event) {
+      if (selecting && areAdjacent(lastSelected, event.target) && !currentSelection.includes(event.target)) {
+        currentSelection.push(event.target);
+        event.target.classList.add('selected');
+        lastSelected = event.target;
+      }
+    }
   
-  seleccionActual = []; // Reiniciar la selección actual
+    function endSelection(event) {
+      selecting = false;
+      const selectedWord = currentSelection.map(el => el.textContent).join('');
+      if (words.includes(selectedWord)) {
+        currentSelection.forEach(el => el.classList.add('found'));
+        const wordElement = document.querySelector(`li[data-word="${selectedWord}"]`);
+        if (wordElement && !wordElement.classList.contains('found')) {
+          wordElement.classList.add('found');
+          foundWords++;
+          checkCompletion();
+        }
+      } else {
+        currentSelection.forEach(el => el.classList.remove('selected'));
+      }
+      updateAttempts();
+      currentSelection = [];
+      lastSelected = null;
+    }
+  
+    function displayWords() {
+      words.forEach(word => {
+        const wordElement = document.createElement('li');
+        wordElement.textContent = word;
+        wordElement.dataset.word = word;
+        // wordList.appendChild(wordElement);
+      });
+    }
+  });
+  
+
+function normalizeWord(word) {
+  return word
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-zA-Z0-9]/g, "")
+      .trim()
+      .toUpperCase();
 }
 
-// Función para agregar una letra seleccionada a la lista de selección actual
-function agregarLetraSeleccionada(letra) {
-  seleccionActual.push(letra);
-}
-
-// ##################33
-
-
-
-// Define la función que quieres ejecutar
-function repetirCadaSegundo() {
-  console.log('Se ejecuta cada segundo');
-}
-
-// Establece el intervalo para llamar a la función cada 1000 milisegundos (1 segundo)
-const intervalo = setInterval(repetirCadaSegundo, 1000);
-
-// Opcional: Código para detener el intervalo después de 10 segundos
-setTimeout(() => {
-  clearInterval(intervalo);
-  console.log('Intervalo detenido');
-}, 10000);

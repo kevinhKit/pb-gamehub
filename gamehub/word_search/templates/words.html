@@ -8,6 +8,7 @@
 {% block css %}
     {{ block.super }}
     <link type="text/css" rel="stylesheet" href="{% static 'word_search/css/styles.css' %}">
+    
 {% endblock %}
 
 {% block header %}
@@ -23,17 +24,27 @@
 
 
 {% block main %}
-    <h1>Sopa de Letras</h1>
-    <div class="container-sopa"> 
-        <div id="sopa" class="puzzle"></div>
-        <ul id="listaPalabras" class="listaPalabras"></ul>
+    <h1 class="title-words">Sopa de Letras: {{ category }}</h1>
+    <small>Dificultad: {{ difficulty }}</small>
+    <div class="container-words">
+        <div id="board" class="board"></div>
+        <ul id="wordList" class="word-list">
+            {% for word in words %}
+                <li data-word="{{ word }}">{{ word }}</li>
+            {% empty %}
+                <li>No hay palabras Disponibles.</li>
+            {% endfor %}
+        </ul>
+        <div class="attempts">
+            <h3>Cantidad de Intentos</h3>
+            <output>0</output>
+        </div>
     </div>
+        
 {% endblock %}
 
 
 
 {% block js  %}
-
     <script src="{% static 'word_search/js/controller.js' %}"></script>
-
 {% endblock  %}
