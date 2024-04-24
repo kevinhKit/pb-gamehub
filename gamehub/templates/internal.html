@@ -8,6 +8,7 @@
 
 
 {% block css %}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link type="text/css" rel="stylesheet" href='{% static "css/home.css" %}'>
     {% block local_css %}
         
@@ -27,17 +28,13 @@
 
 
 {% block main %}
-    <!-- <div class="game-container">
-        <div>
-            <h1>Damas Chinas</h1>
-        </div>
-        <div>
-            <h1>Tic Tac Toe</h1>
-        </div>
-        <div>
-            <h1>Sopa de Letras</h1>
-        </div>
-    </div> -->
+
+    <div class="back-nav">
+        <span class="material-symbols-outlined">
+            keyboard_backspace
+        </span>
+        <span>Regresar</span>
+    </div>
 {% endblock %}
 
 
