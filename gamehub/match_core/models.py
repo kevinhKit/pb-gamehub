@@ -31,6 +31,7 @@ class Match(models.Model):
     player1_attempts = models.IntegerField()
     player2_attempts = models.IntegerField(null=True)
     points_awarded = models.IntegerField(default=0)
+    # is_draw = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.game} between {self.player1} and {self.player2}"
