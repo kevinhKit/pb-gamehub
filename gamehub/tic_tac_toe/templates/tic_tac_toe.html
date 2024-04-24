@@ -23,7 +23,18 @@
 
 
 {% block main %}
-    <h1>X0</h1>
+{{ block.super }}
+    <div>
+        <h1>X0</h1>
+        <label>¿Quieres conectarte?</label>
+        <input type="radio" id="connected" name="connection" value="connected"> Conectado
+        <input type="radio" id="disconnected" name="connection" value="disconnected" checked> Desconectado
+        <input type="text" id="username" placeholder="Ingresa tu nombre">
+        <button id="generate">Botón Rojo</button>
+        <div id="status">No hay nadie más esperando.</div>
+        <div id="timer">Espera: 0s</div>
+        <ul id="random-numbers"></ul>
+    </div>
 {% endblock %}
 
 
