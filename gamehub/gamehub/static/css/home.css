@@ -285,3 +285,29 @@ picture.profile> img{
     color: rgba(0, 0, 0, 0.5);
     font-size: 1.2rem;
 }
+
+
+
+
+
+
+
+
+
+
+/* */
+.back-nav{
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid var(--cl-green);
+    gap: 1rem;
+    border-radius: 25px;
+    padding: 0.4rem 0.8rem;
+    top: calc( var(--height-header) + 1rem );
+    left: calc( var(--width-sidebar) + 1rem );
+}
+
+.back-nav:hover{
+
+}
