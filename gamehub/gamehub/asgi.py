@@ -1,38 +1,58 @@
+
 # import os
 
-# from channels.routing import ProtocolTypeRouter
+# from channels.auth import AuthMiddlewareStack
+# from channels.routing import ProtocolTypeRouter, URLRouter
+# from channels.security.websocket import AllowedHostsOriginValidator
 # from django.core.asgi import get_asgi_application
 
 # os.environ.setdefault("DJANGO_SETTINGS_MODULE", "gamehub.settings")
 
+# django_asgi_app = get_asgi_application()
+
+# from chat.routing import websocket_urlpatterns
+
 # application = ProtocolTypeRouter(
 #     {
-#         "http": get_asgi_application(),
-#         # Just HTTP for now. (We can add other protocols later.)
+#         "http": django_asgi_app,
+#         "websocket": AllowedHostsOriginValidator(
+#             AuthMiddlewareStack(URLRouter(websocket_urlpatterns))
+#         ),
 #     }
 # )
 
 
-# mysite/asgi.py
-import os
 
+# gamehub/asgi.py
+import os
+from django.core.asgi import get_asgi_application
 from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.security.websocket import AllowedHostsOriginValidator
-from django.core.asgi import get_asgi_application
+from django.urls import path
+from tic_tac_toe.consumers import TicTacToeConsumer
+from chat.consumers import ChatConsumer
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "gamehub.settings")
-# Initialize Django ASGI application early to ensure the AppRegistry
-# is populated before importing code that may import ORM models.
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'gamehub.settings')
+
+# Define Django's ASGI application for HTTP requests
 django_asgi_app = get_asgi_application()
 
-from chat.routing import websocket_urlpatterns
+# Define websocket_urlpatterns for the websocket consumers
+websocket_urlpatterns = [
+    path('ws/tictactoe/<room_name>/', TicTacToeConsumer.as_asgi()),
+    path('ws/chat/<room_name>/', ChatConsumer.as_asgi()),
+    # Agrega aquí cualquier otro websocket consumer que tengas
+]
 
-application = ProtocolTypeRouter(
-    {
-        "http": django_asgi_app,
-        "websocket": AllowedHostsOriginValidator(
-            AuthMiddlewareStack(URLRouter(websocket_urlpatterns))
-        ),
-    }
-)
+# Define the top-level ASGI application to handle different protocols like HTTP and WebSocket
+application = ProtocolTypeRouter({
+    "http": django_asgi_app,  # HTTP requests will be handled by Django ASGI application
+    "websocket": AllowedHostsOriginValidator(
+        AuthMiddlewareStack(
+            URLRouter(
+                websocket_urlpatterns  # WebSocket requests will be handled by the routes defined in websocket_urlpatterns
+            )
+        )
+    ),
+})
