@@ -9,7 +9,9 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
+# from django.contrib.admin.models import LogEntry
 
+# LogEntry.objects.all().delete()
 from pathlib import Path
 import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -38,7 +40,7 @@ INSTALLED_APPS = [
     'chinese_checkers',
     'word_search',
     'tic_tac_toe',
-    # 'chat',
+    'chat',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -56,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'django.contrib.auth.middleware.AuthenticationMiddleware',
 ]
 
 ROOT_URLCONF = 'gamehub.urls'
@@ -139,11 +142,25 @@ STATICFILES_DIRS = ('gamehub/static',)
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# mysite/settings.py
+
+
+# COMUNICACIÓN EN TIEMPO REAL
+# gamehub/settings.py
 # Daphne
 ASGI_APPLICATION = 'gamehub.asgi.application'
+
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}
 
 
 
 # models customUser
 AUTH_USER_MODEL = 'accounts.CustomUser'
+
